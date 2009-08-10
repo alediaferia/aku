@@ -1,3 +1,13 @@
+ /* This file is part of the KDE project
+
+   Copyright (C) 2008 Francesco Grieco <fgrieco@gmail.com>
+   Copyright (C) 2008 Alessandro Diaferia <alediaferia@gmail.com>
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public
+   License as published by the Free Software Foundation; either
+   version 2 of the License, or (at your option) any later version.
+*/
 #include "mainwindow.h"
 #include "pluginloader.h"
 #include "pluginview.h"
@@ -518,7 +528,7 @@ void MainWindow::handleProgress(double current, double total)
         m_progressBar->show();
     }
     kDebug() << current << total;
-    double percent = (double(100) * current) / total;
+    double percent = ((double)100 * current) / total;
     m_progressBar->setValue((uint)percent);
     kDebug() << (uint)percent;
 }
@@ -544,5 +554,7 @@ void MainWindow::addFileToArchive()
 void MainWindow::addDirToArchive()
 {
     akuAddDir *dirDialog = new akuAddDir(this);
+    // we do not need to have the dialog in memory also after closing it.
+    dirDialog->setWindowFlags(Qt::WA_DeleteOnClose);
     dirDialog->show(); 
 }
